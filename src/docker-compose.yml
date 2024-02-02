@@ -1,0 +1,57 @@
+version: '3.8'
+
+services:
+    grafana:
+        image: grafana/grafana:10.3.0
+        labels:
+            traefik.enable: true
+            traefik.frontend.rule: Host=${grafanahostname}
+            traefik.port: 3000
+        volumes:
+            - /mnt/store/grafana/grafana:/var/lib/grafana
+        environment:
+            GF_ANALYTICS_REPORTING_ENABLED: false
+            GF_SERVER_ROOT_URL: https://${grafanahostname}
+            GF_DATABASE_TYPE: postgres
+            GF_DATABASE_HOST: grafana-pg
+            GF_DATABASE_NAME: ${POSTGRES_DB}
+            GF_DATABASE_USER: ${POSTGRES_USER}
+            GF_DATABASE_PASSWORD: ${POSTGRES_PASSWORD}
+
+    grafana-pg:
+        image: postgres:15
+        volumes:
+            - /mnt/store/grafana/db:/var/lib/postgresql/data
+        environment:
+            POSTGRES_DB: ${POSTGRES_DB}
+            POSTGRES_USER: ${POSTGRES_USER}
+            POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+
+    prometheus:
+        image: prom/prometheus:v2.36.2
+        volumes:
+            - ./prometheus.yml:/etc/prometheus/prometheus.yml:ro
+            - /mnt/store/grafana/prometheus:/prometheus
+        command:
+            - '--config.file=/etc/prometheus/prometheus.yml'
+            - '--storage.tsdb.path=/prometheus'
+
+    uptime-kuma:
+        image: louislam/uptime-kuma:1
+        labels:
+            traefik.enable: true
+            traefik.frontend.rule: Host=${kumahostname}
+            traefik.port: 3001
+        volumes:
+            - /mnt/store/grafana/uptimekuma:/app/data
+
+    ## Optional, system stats
+    node-exporter:
+        image: quay.io/prometheus/node-exporter:latest
+        volumes:
+            - '/:/host:ro,rslave'
+        user: 0:0
+        command:
+            - '--path.rootfs=/host'
+        deploy:
+            mode: global
