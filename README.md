@@ -4,7 +4,7 @@ Compose files for a monitoring system.
 
 ## Requirements
 
-- Docker
+- Docker (19.03.0+)
 - Docker Compose
 
 ## What does it contains
