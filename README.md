@@ -34,13 +34,15 @@ This deployment uses multiple volumes:
 1. Change paths of `/mnt/secrets` and `/mnt/store` to your desired ones.
 2. Create the environment file `.env` containing:
 
-    grafanahostname=grafana.something.tld
-    kumahostname=kuma.something.tld
+````
+grafanahostname=grafana.something.tld
+kumahostname=kuma.something.tld
 
-    GF_SECURITY_ADMIN_PASSWORD=iamsecret
-    POSTGRES_DB=grafana
-    POSTGRES_USER=grafana
-    POSTGRES_PASSWORD=evenmoresecret
+GF_SECURITY_ADMIN_PASSWORD=iamsecret
+POSTGRES_DB=grafana
+POSTGRES_USER=grafana
+POSTGRES_PASSWORD=evenmoresecret
+````
 
 3. `docker compose up -d uptime-kuma` and set it up
 4. Fill the uptime-kuma credentials in the `prometheus.yml` to be able to scrape data from it
