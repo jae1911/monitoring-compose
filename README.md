@@ -18,14 +18,15 @@ Compose files for a monitoring system.
 
 - This deployment assumes you use [Traefik](https://traefik.io/traefik/) as a reverse proxy
 - This deployment does not uses SMTP (see `GF_SMTP_*` configuration keys for that)
-- Some part of the configuration related to OAUTH was omitted to simplify this repo (see `GF_AUTH_GENERIC_OAUTH_*` configuration keys for that)
+- Some part of the configuration related to OAUTH were omitted to simplify this repo (see `GF_AUTH_GENERIC_OAUTH_*` configuration keys for that)
 - Network configuration of the Compose file was omitted
+- The real deployment uses a different drive for secrets (including the `prometheus.yml`) but was simplified for this repo
 
 ## Volumes
 
 This deployment uses multiple volumes:
 
-- `.` - Current directory, pulled from the configuration repository`
+- `.` - Current directory, pulled from the configuration repository
 - `/mnt/store` - A dedicated storage area
 
 ## HowTo
@@ -52,3 +53,4 @@ You can now go on your Grafana hostname and set it up.
 - [Uptime Kuma sample Grafana dashboard](https://github.com/louislam/uptime-kuma/tree/unofficial/grafana-dashboard)
 - [node_exporter sample Grafana dashboard](https://grafana.com/grafana/dashboards/1860-node-exporter-full/)
 - [Grafana docs](https://grafana.com/docs/grafana/latest/setup-grafana/configure-grafana/)
+- [K8s deployment](https://forge.tedomum.net/tedomum/kity/-/tree/master/kube-monitoring)
