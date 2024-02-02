@@ -17,6 +17,8 @@ services:
             GF_DATABASE_NAME: ${POSTGRES_DB}
             GF_DATABASE_USER: ${POSTGRES_USER}
             GF_DATABASE_PASSWORD: ${POSTGRES_PASSWORD}
+        depends_on:
+            - grafana-pg
 
     grafana-pg:
         image: postgres:15
