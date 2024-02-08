@@ -56,3 +56,5 @@ You can now go on your Grafana hostname and set it up.
 - [node_exporter sample Grafana dashboard](https://grafana.com/grafana/dashboards/1860-node-exporter-full/)
 - [Grafana docs](https://grafana.com/docs/grafana/latest/setup-grafana/configure-grafana/)
 - [K8s deployment](https://forge.tedomum.net/tedomum/kity/-/tree/master/kube-monitoring)
+- Exporters: https://github.com/pschiffe/mailcow-dockerized/blob/563d5e00e236898edc3d2160f3b1c6be0c437baa/docker-compose.yml#L647 
+- Some Configuration and reference stuff: https://github.com/stefanprodan/dockprom
