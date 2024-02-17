@@ -42,7 +42,6 @@ services:
 
     uptime-kuma:
         container_name: uptime-kuma
-        user: ${MY_UID}:${MY_GID}
         image: louislam/uptime-kuma:1
         restart: unless-stopped
         expose:
