@@ -19,8 +19,7 @@ services:
             - monitor-net
         environment:
             GF_ANALYTICS_REPORTING_ENABLED: false
-            GF_SECURITY_ADMIN_USER: ${ADMIN_USER}
-            GF_SECURITY_ADMIN_PASSWORD: ${ADMIN_PASSWORD}
+            GF_SECURITY_ADMIN_PASSWORD: ${GF_SECURITY_ADMIN_PASSWORD}
 
     prometheus:
         container_name: prometheus
