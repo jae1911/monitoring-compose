@@ -26,7 +26,6 @@ services:
         container_name: prometheus
         image: prom/prometheus:v2.36.2
         command:
-            - '--enable-feature=expand-external-labels'
             - '--config.file=/etc/prometheus/prometheus.yml'
             - '--storage.tsdb.path=/prometheus'
         volumes:
