@@ -52,7 +52,7 @@ services:
             - ./uptime-kuma/data:/app/data
 
     dmarc-exporter-resonite:
-        image: jgosmann/dmarc-metrics-exporter
+        image: jgosmann/dmarc-metrics-exporter:0.11.0
         container_name: dmarc-exporter-resonite
         restart: unless-stopped
         expose:
