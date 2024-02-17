@@ -25,12 +25,13 @@ services:
     prometheus:
         container_name: prometheus
         image: prom/prometheus:v2.36.2
+        command:
+            - '--enable-feature=expand-external-labels'
+            - '--config.file=/etc/prometheus/prometheus.yml'
+            - '--storage.tsdb.path=/prometheus'
         volumes:
             - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml:ro
             - ./prometheus/data:/prometheus
-        command:
-            - '--config.file=/etc/prometheus/prometheus.yml'
-            - '--storage.tsdb.path=/prometheus'
         restart: unless-stopped
         networks:
             - monitor-net
