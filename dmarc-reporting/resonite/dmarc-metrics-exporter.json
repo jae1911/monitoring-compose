@@ -1,0 +1,28 @@
+{
+    "listen_addr": "127.0.0.1",
+    "port": 9797,
+    "imap": {
+        "host": "mail.yellowdogman.com",
+        "port": 993,
+        "username": "postmaster@resonite.com",
+        "password": "TODO",
+        "use_ssl": true,
+        "verify_certificate": true
+    },
+    "folders": {
+        "inbox": "Inbox",
+        "done": "Archive",
+        "error": "Invalid"
+    },
+    "storage_path": "/var/lib/dmarc-metrics-exporter",
+    "poll_interval_seconds": 60,
+    "deduplication_max_seconds": 604800,
+    "logging": {
+        "version": 1,
+        "loggers": {
+            "uvicorn": {
+                "level": "INFO"
+            }
+        }
+    }
+}

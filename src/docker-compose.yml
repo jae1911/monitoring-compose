@@ -20,7 +20,6 @@ services:
             GF_SECURITY_ADMIN_USER: ${ADMIN_USER}
             GF_SECURITY_ADMIN_PASSWORD: ${ADMIN_PASSWORD}
 
-    ## Good
     prometheus:
         container_name: prometheus
         image: prom/prometheus:v2.36.2
@@ -33,11 +32,13 @@ services:
         restart: unless-stopped
         networks:
             - monitor-net
-        ## Allow prometheus access to our other stacks
+        ## Allow prometheus access to our other stacks via the host machine network
+        ## TODO: best way to bridge two stacks together network wise?
         extra_hosts:
             - "host.docker.internal:host-gateway"
 
     uptime-kuma:
+        container_name: uptime-kuma
         image: louislam/uptime-kuma:1
         restart: unless-stopped
         expose:
@@ -46,4 +47,14 @@ services:
             - monitor-net
         volumes:
             - ./uptime-kuma/data:/app/data
+
+    dmarc-exporter-resonite:
+        image: jgosmann/dmarc-metrics-exporter
+        container_name: dmarc-exporter-resonite
+        restart: unless-stopped
+        expose:
+            - 9797
+        volumes:
+            - './dmarc-reporting/resonite/dmarc-metrics-exporter.json:/etc/dmarc-metrics-exporter.json:ro'
+            - './dmarc-reporting/resonite/metrics:/var/lib/dmarc-metrics-exporter:rw'
 

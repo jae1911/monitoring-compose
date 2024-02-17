@@ -18,3 +18,7 @@ scrape_configs:
     scrape_interval: 30s
     static_configs:
       - targets: ['host.docker.internal:9099']
+  - job_name: 'dmarc'
+    scrape_interval: 30s
+    static_configs:
+      - targets: ['dmarc-exporter-resonite:9797']
