@@ -64,3 +64,15 @@ services:
             - './dmarc-reporting/resonite/dmarc-metrics-exporter.json:/etc/dmarc-metrics-exporter.json:ro'
             - './dmarc-reporting/resonite/metrics:/var/lib/dmarc-metrics-exporter:rw'
 
+    resonite-json-exporter:
+        image: quay.io/prometheuscommunity/json-exporter
+        container_name: resonite-json-exporter
+        user: ${MY_UID}:${MY_GID}
+        restart: unless-stopped
+        expose:
+            - 7979
+        volumes:
+            - ./json-exporter/config.yml:/config.yml:ro
+        command:
+            - '--config.file=/config.yml'
+

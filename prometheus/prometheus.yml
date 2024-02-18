@@ -22,3 +22,45 @@ scrape_configs:
     scrape_interval: 30s
     static_configs:
       - targets: ['dmarc-exporter-resonite:9797']
+  - job_name: json-resonite-networkNodes
+    metrics_path: /probe
+    params:
+      module: [networkNodes]
+    static_configs:
+    - targets:
+      - https://api.resonite.com/networknodes
+    relabel_configs:
+    - source_labels: [__address__]
+      target_label: __param_target
+    - source_labels: [__param_target]
+      target_label: instance
+    - target_label: __address__
+      replacement: resonite-json-exporter:7979
+  - job_name: json-resonite-onlineStats
+    metrics_path: /probe
+    params:
+      module: [onlineStats]
+    static_configs:
+    - targets:
+      - https://api.resonite.com/stats/onlineStats
+    relabel_configs:
+    - source_labels: [__address__]
+      target_label: __param_target
+    - source_labels: [__param_target]
+      target_label: instance
+    - target_label: __address__
+      replacement: resonite-json-exporter:7979
+  - job_name: json-resonite-cloudStats
+    metrics_path: /probe
+    params:
+      module: [cloudStats]
+    static_configs:
+    - targets:
+      - https://api.resonite.com/stats/cloudStats
+    relabel_configs:
+    - source_labels: [__address__]
+      target_label: __param_target
+    - source_labels: [__param_target]
+      target_label: instance
+    - target_label: __address__
+      replacement: resonite-json-exporter:7979

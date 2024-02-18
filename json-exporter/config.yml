@@ -1,0 +1,128 @@
+---
+modules:
+  networkNodes:
+    url: https://api.resonite.com/networknodes
+    metrics:
+    - name: resonite_networkNodes
+      help: number of users in our network Nodes.
+      type: object
+      epochTimestamp: '{ .timestamp }'
+      valuetype: gauge
+      path: '{ [*] }'
+      labels:
+        nodeType: '{ .nodeType }'
+        name: '{ .name }'
+        id: '{ .id }'
+        protocolVersion: '{ .protocolVersion }'
+      values:
+        userCount: '{ .userCount }'
+  cloudStats:
+    url: https://api.resonite.com/stats/cloudStats
+    metrics:
+      - name: resonite_cloudStats
+        help: Metrics about our Cloud Stats
+        epochTimestamp: '{ .captureTimestamp }'
+        type: object
+        valuetype: gauge
+        path: '{$}'
+        values:
+          assetMetadataJobs: '{ .assetMetadataJobs }'
+          assetVariantJobs: '{ .assetVariantJobs }'
+          computedAssetMetadata: '{ .computedAssetMetadata }'
+          computedAssetVariants: '{ .computedAssetVariants }'
+          recordPreprocessJobs: '{ .recordPreprocessJobs }'
+          uploadJobs: '{ .uploadJobs }'
+          migrationTasksInQueue: '{ .migrationTasksInQueue}'
+          migrationRecordsPerMinute: '{ .migrationRecordsPerMinute }'
+  onlineStats:
+    url: https://api.resonite.com/stats/onlineStats
+    metrics:
+      - name: resonite_onlineStats_visibleSessionsByAccessLevel
+        help: Visible sessions by access level
+        valuetype: gauge
+        type: object
+        path: '{.visibleSessionsByAccessLevel}'
+        values:
+          anyone: '{.Anyone}'
+          contactsPlus: '{.ContactsPlus}'
+          contacts: '{.Contacts}'
+          registeredUsers: '{ .RegisteredUsers }'
+          private: '{ .Private }'
+          lan: '{ .LAN }'
+      - name: resonite_onlineStats_hiddenSessionsByAccessLevel
+        help: Hidden sessions by access level
+        valuetype: gauge
+        type: object
+        path: '{.hiddenSessionsByAccessLevel}'
+        values:
+          anyone: '{.Anyone}'
+          contactsPlus: '{.ContactsPlus}'
+          contacts: '{.Contacts}'
+          registeredUsers: '{ .RegisteredUsers }'
+          private: '{ .Private }'
+          lan: '{ .LAN }'
+      - name: resonite_onlineStats_activeVisibleSessionsByAccessLevel
+        help: Hidden sessions by access level
+        valuetype: gauge
+        type: object
+        path: '{.activeVisibleSessionsByAccessLevel}'
+        values:
+          anyone: '{.Anyone}'
+          contactsPlus: '{.ContactsPlus}'
+          contacts: '{.Contacts}'
+          registeredUsers: '{ .RegisteredUsers }'
+          private: '{ .Private }'
+          lan: '{ .LAN }'
+      - name: resonite_onlineStats_activeHiddenSessionsByAccessLevel
+        help: Hidden sessions by access level
+        valuetype: gauge
+        type: object
+        path: '{.activeHiddenSessionsByAccessLevel}'
+        values:
+          anyone: '{.Anyone}'
+          contactsPlus: '{.ContactsPlus}'
+          contacts: '{.Contacts}'
+          registeredUsers: '{ .RegisteredUsers }'
+          private: '{ .Private }'
+          lan: '{ .LAN }'
+      - name: resonite_onlineStats
+        help: Metrics about users on Resonite
+        path: '{$}'
+        type: object
+        valuetype: gauge
+        values:
+          registeredUsers: '{.registeredUsers}'
+          presentUsers: '{.presentUsers}'
+          awayUsers: '{.awayUsers}'
+          instanceCount: '{.instanceCount}'
+          usersInVR: '{.usersInVR}'
+          usersInScreen: '{.usersInScreen}'
+          usersOnDesktop: '{.usersOnDesktop}'
+          usersOnMobile: '{.usersOnMobile}'
+          usersInVisiblePublicSessions: '{.usersInVisiblePublicSessions}'
+          usersInVisibleSemiAccessibleSessions: '{.usersInVisibleSemiAccessibleSessions}'
+          usersInHiddenSessions: '{.usersInHiddenSessions}'
+          usersInPrivateSessions: '{.usersInPrivateSessions}'
+      - name: resonite_onlineStats_usersBySessionAccessLevel
+        help: Number of users by the session access level that they're in
+        path: '{.usersBySessionAccessLevel}'
+        type: object
+        valuetype: gauge
+        values:
+          anyone: '{.Anyone}'
+          contactsPlus: '{.ContactsPlus}'
+          contacts: '{.Contacts}'
+          registeredUsers: '{ .RegisteredUsers }'
+          private: '{ .Private }'
+          lan: '{ .LAN }'
+      - name: resonite_onlineStats_usersByClientType
+        help: Number of users by the session access level that they're in
+        path: '{.usersByClientType}'
+        type: object
+        valuetype: gauge
+        values:
+          graphicalClient: '{.GraphicalClient}'
+          chatClient: '{.ChatClient}'
+          headless: '{.Headless}'
+          bot: '{.Bot}'
+          unknown: '{.Unknown}'
