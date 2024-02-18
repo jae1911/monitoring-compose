@@ -58,6 +58,8 @@ services:
         user: ${MY_UID}:${MY_GID}
         container_name: dmarc-exporter-resonite
         restart: unless-stopped
+        networks:
+            - monitor-net
         expose:
             - 9797
         volumes:
@@ -75,4 +77,6 @@ services:
             - ./json-exporter/config.yml:/config.yml:ro
         command:
             - '--config.file=/config.yml'
+        networks:
+            - monitor-net
 
