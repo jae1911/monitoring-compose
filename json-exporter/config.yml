@@ -6,7 +6,6 @@ modules:
     - name: resonite_networkNodes
       help: number of users in our network Nodes.
       type: object
-      epochTimestamp: '{ .timestamp }'
       valuetype: gauge
       path: '{ [*] }'
       labels:
@@ -21,7 +20,6 @@ modules:
     metrics:
       - name: resonite_cloudStats
         help: Metrics about our Cloud Stats
-        epochTimestamp: '{ .captureTimestamp }'
         type: object
         valuetype: gauge
         path: '{$}'
@@ -37,92 +35,438 @@ modules:
   onlineStats:
     url: https://api.resonite.com/stats/onlineStats
     metrics:
-      - name: resonite_onlineStats_visibleSessionsByAccessLevel
-        help: Visible sessions by access level
+      - name: resonite_onlineStats_instance
+        help: Count of all copies of Resonite running regardless of user type
+        valuetype: gauge
+        path: '{$}'
+        values:
+          count: ${.instanceCount}
+# Session Counts
+# Inactive Visible Sessions
+      - name: resonite_onlineStats_sessions
+        help: Current visible sessions
         valuetype: gauge
         type: object
         path: '{.visibleSessionsByAccessLevel}'
+        labels:
+          accessLevel: Anyone
+          visible: 1
+          active: 0
         values:
-          anyone: '{.Anyone}'
-          contactsPlus: '{.ContactsPlus}'
-          contacts: '{.Contacts}'
-          registeredUsers: '{ .RegisteredUsers }'
-          private: '{ .Private }'
-          lan: '{ .LAN }'
-      - name: resonite_onlineStats_hiddenSessionsByAccessLevel
-        help: Hidden sessions by access level
+          count: '{.Anyone}'
+      - name: resonite_onlineStats_sessions
+        help: Current visible sessions
         valuetype: gauge
         type: object
-        path: '{.hiddenSessionsByAccessLevel}'
+        path: '{.visibleSessionsByAccessLevel}'
+        labels:
+          accessLevel: Contacts
+          visible: 1
+          active: 0
         values:
-          anyone: '{.Anyone}'
-          contactsPlus: '{.ContactsPlus}'
-          contacts: '{.Contacts}'
-          registeredUsers: '{ .RegisteredUsers }'
-          private: '{ .Private }'
-          lan: '{ .LAN }'
-      - name: resonite_onlineStats_activeVisibleSessionsByAccessLevel
-        help: Hidden sessions by access level
+          count: '{.Contacts}'
+      - name: resonite_onlineStats_sessions
+        help: Current visible sessions
+        valuetype: gauge
+        type: object
+        path: '{.visibleSessionsByAccessLevel}'
+        labels:
+          accessLevel: ContactsPlus
+          visible: 1
+          active: 0
+        values:
+          count: '{.ContactsPlus}'
+      - name: resonite_onlineStats_sessions
+        help: Current visible sessions
+        valuetype: gauge
+        type: object
+        path: '{.visibleSessionsByAccessLevel}'
+        labels:
+          accessLevel: RegisteredUsers
+          visible: 1
+          active: 0
+        values:
+          count: '{.RegisteredUsers}'
+      - name: resonite_onlineStats_sessions
+        help: Current visible sessions
+        valuetype: gauge
+        type: object
+        path: '{.visibleSessionsByAccessLevel}'
+        labels:
+          accessLevel: Private
+          visible: 1
+          active: 0
+        values:
+          count: '{.Private}'
+      - name: resonite_onlineStats_sessions
+        help: Current visible sessions
+        valuetype: gauge
+        type: object
+        path: '{.visibleSessionsByAccessLevel}'
+        labels:
+          accessLevel: LAN
+          visible: 1
+          active: 0
+        values:
+          count: '{.LAN}'
+
+# Active Visible Sessions
+      - name: resonite_onlineStats_sessions
+        help: Current visible sessions
         valuetype: gauge
         type: object
         path: '{.activeVisibleSessionsByAccessLevel}'
+        labels:
+          accessLevel: Anyone
+          visible: 1
+          active: 1
         values:
-          anyone: '{.Anyone}'
-          contactsPlus: '{.ContactsPlus}'
-          contacts: '{.Contacts}'
-          registeredUsers: '{ .RegisteredUsers }'
-          private: '{ .Private }'
-          lan: '{ .LAN }'
-      - name: resonite_onlineStats_activeHiddenSessionsByAccessLevel
-        help: Hidden sessions by access level
+          count: '{.Anyone}'
+      - name: resonite_onlineStats_sessions
+        help: Current visible sessions
+        valuetype: gauge
+        type: object
+        path: '{.activeVisibleSessionsByAccessLevel}'
+        labels:
+          accessLevel: Contacts
+          visible: 1
+          active: 1
+        values:
+          count: '{.Contacts}'
+      - name: resonite_onlineStats_sessions
+        help: Current visible sessions
+        valuetype: gauge
+        type: object
+        path: '{.activeVisibleSessionsByAccessLevel}'
+        labels:
+          accessLevel: ContactsPlus
+          visible: 1
+          active: 1
+        values:
+          count: '{.ContactsPlus}'
+      - name: resonite_onlineStats_sessions
+        help: Current visible sessions
+        valuetype: gauge
+        type: object
+        path: '{.activeVisibleSessionsByAccessLevel}'
+        labels:
+          accessLevel: RegisteredUsers
+          visible: 1
+          active: 1
+        values:
+          count: '{.RegisteredUsers}'
+      - name: resonite_onlineStats_sessions
+        help: Current visible sessions
+        valuetype: gauge
+        type: object
+        path: '{.activeVisibleSessionsByAccessLevel}'
+        labels:
+          accessLevel: Private
+          visible: 1
+          active: 1
+        values:
+          count: '{.Private}'
+      - name: resonite_onlineStats_sessions
+        help: Current visible sessions
+        valuetype: gauge
+        type: object
+        path: '{.activeVisibleSessionsByAccessLevel}'
+        labels:
+          accessLevel: LAN
+          visible: 1
+          active: 1
+        values:
+          count: '{.LAN}'
+
+# Active Hidden Sessions
+      - name: resonite_onlineStats_sessions
+        help: Current visible sessions
         valuetype: gauge
         type: object
         path: '{.activeHiddenSessionsByAccessLevel}'
+        labels:
+          accessLevel: Anyone
+          visible: 0
+          active: 1
         values:
-          anyone: '{.Anyone}'
-          contactsPlus: '{.ContactsPlus}'
-          contacts: '{.Contacts}'
-          registeredUsers: '{ .RegisteredUsers }'
-          private: '{ .Private }'
-          lan: '{ .LAN }'
-      - name: resonite_onlineStats
-        help: Metrics about users on Resonite
-        path: '{$}'
-        type: object
+          count: '{.Anyone}'
+      - name: resonite_onlineStats_sessions
+        help: Current visible sessions
         valuetype: gauge
-        values:
-          registeredUsers: '{.registeredUsers}'
-          presentUsers: '{.presentUsers}'
-          awayUsers: '{.awayUsers}'
-          instanceCount: '{.instanceCount}'
-          usersInVR: '{.usersInVR}'
-          usersInScreen: '{.usersInScreen}'
-          usersOnDesktop: '{.usersOnDesktop}'
-          usersOnMobile: '{.usersOnMobile}'
-          usersInVisiblePublicSessions: '{.usersInVisiblePublicSessions}'
-          usersInVisibleSemiAccessibleSessions: '{.usersInVisibleSemiAccessibleSessions}'
-          usersInHiddenSessions: '{.usersInHiddenSessions}'
-          usersInPrivateSessions: '{.usersInPrivateSessions}'
-      - name: resonite_onlineStats_usersBySessionAccessLevel
-        help: Number of users by the session access level that they're in
-        path: '{.usersBySessionAccessLevel}'
         type: object
-        valuetype: gauge
+        path: '{.activeHiddenSessionsByAccessLevel}'
+        labels:
+          accessLevel: Contacts
+          visible: 0
+          active: 1
         values:
-          anyone: '{.Anyone}'
-          contactsPlus: '{.ContactsPlus}'
-          contacts: '{.Contacts}'
-          registeredUsers: '{ .RegisteredUsers }'
-          private: '{ .Private }'
-          lan: '{ .LAN }'
-      - name: resonite_onlineStats_usersByClientType
-        help: Number of users by the session access level that they're in
+          count: '{.Contacts}'
+      - name: resonite_onlineStats_sessions
+        help: Current visible sessions
+        valuetype: gauge
+        type: object
+        path: '{.activeHiddenSessionsByAccessLevel}'
+        labels:
+          accessLevel: ContactsPlus
+          visible: 0
+          active: 1
+        values:
+          count: '{.ContactsPlus}'
+      - name: resonite_onlineStats_sessions
+        help: Current visible sessions
+        valuetype: gauge
+        type: object
+        path: '{.activeHiddenSessionsByAccessLevel}'
+        labels:
+          accessLevel: RegisteredUsers
+          visible: 0
+          active: 1
+        values:
+          count: '{.RegisteredUsers}'
+      - name: resonite_onlineStats_sessions
+        help: Current visible sessions
+        valuetype: gauge
+        type: object
+        path: '{.activeHiddenSessionsByAccessLevel}'
+        labels:
+          accessLevel: Private
+          visible: 0
+          active: 1
+        values:
+          count: '{.Private}'
+      - name: resonite_onlineStats_sessions
+        help: Current visible sessions
+        valuetype: gauge
+        type: object
+        path: '{.activeHiddenSessionsByAccessLevel}'
+        labels:
+          accessLevel: LAN
+          visible: 0
+          active: 1
+        values:
+          count: '{.LAN}'
+
+# Inactive Hidden Sessions
+      - name: resonite_onlineStats_sessions
+        help: Current visible sessions
+        valuetype: gauge
+        type: object
+        path: '{.hiddenSessionsByAccessLevel}'
+        labels:
+          accessLevel: Anyone
+          visible: 0
+          active: 0
+        values:
+          count: '{.Anyone}'
+      - name: resonite_onlineStats_sessions
+        help: Current visible sessions
+        valuetype: gauge
+        type: object
+        path: '{.hiddenSessionsByAccessLevel}'
+        labels:
+          accessLevel: Contacts
+          visible: 0
+          active: 0
+        values:
+          count: '{.Contacts}'
+      - name: resonite_onlineStats_sessions
+        help: Current visible sessions
+        valuetype: gauge
+        type: object
+        path: '{.hiddenSessionsByAccessLevel}'
+        labels:
+          accessLevel: ContactsPlus
+          visible: 0
+          active: 0
+        values:
+          count: '{.ContactsPlus}'
+      - name: resonite_onlineStats_sessions
+        help: Current visible sessions
+        valuetype: gauge
+        type: object
+        path: '{.hiddenSessionsByAccessLevel}'
+        labels:
+          accessLevel: RegisteredUsers
+          visible: 0
+          active: 0
+        values:
+          count: '{.RegisteredUsers}'
+      - name: resonite_onlineStats_sessions
+        help: Current visible sessions
+        valuetype: gauge
+        type: object
+        path: '{.hiddenSessionsByAccessLevel}'
+        labels:
+          accessLevel: Private
+          visible: 0
+          active: 0
+        values:
+          count: '{.Private}'
+      - name: resonite_onlineStats_sessions
+        help: Current visible sessions
+        valuetype: gauge
+        type: object
+        path: '{.hiddenSessionsByAccessLevel}'
+        labels:
+          accessLevel: LAN
+          visible: 0
+          active: 0
+        values:
+          count: '{.LAN}'
+# END Session Counts
+
+# Client Type
+# Graphical
+      - name: resonite_onlineStats_users_client
+        help: Current user counts calculated using Client Type
+        valuetype: gauge
+        type: object
         path: '{.usersByClientType}'
-        type: object
-        valuetype: gauge
+        labels:
+          clientType: GraphicalClient
         values:
-          graphicalClient: '{.GraphicalClient}'
-          chatClient: '{.ChatClient}'
-          headless: '{.Headless}'
-          bot: '{.Bot}'
-          unknown: '{.Unknown}'
+          count: '{.GraphicalClient}'
+
+# Headless
+      - name: resonite_onlineStats_users_client
+        help: Current user counts calculated using Client Type
+        valuetype: gauge
+        type: object
+        path: '{.usersByClientType}'
+        labels:
+          clientType: Headless
+        values:
+          count: '{.Headless}'
+
+# Chat Client
+      - name: resonite_onlineStats_users_client
+        help: Current user counts calculated using Client Type
+        valuetype: gauge
+        type: object
+        path: '{.usersByClientType}'
+        labels:
+          clientType: ChatClient
+        values:
+          count: '{.ChatClient}'
+
+# Unknown Client
+      - name: resonite_onlineStats_users_client
+        help: Current user counts calculated using Client Type
+        valuetype: gauge
+        type: object
+        path: '{.usersByClientType}'
+        labels:
+          clientType: Unknown
+        values:
+          count: '{.Unknown}'
+# Bot Client
+      - name: resonite_onlineStats_users_client
+        help: Current user counts calculated using Client Type
+        valuetype: gauge
+        type: object
+        path: '{.usersByClientType}'
+        labels:
+          clientType: Bot
+        values:
+          count: '{.Bot}'
+# END Client Type
+
+# User Count By Device Type
+      - name: resonite_onlineStats_users_device
+        help: Current user counts calculated using Device Type
+        valuetype: gauge
+        type: object
+        path: '{$}'
+        labels:
+          deviceType: Screen
+        values:
+          count: '{.usersInScreen}'
+      - name: resonite_onlineStats_users_device
+        help: Current user counts calculated using Device Type
+        valuetype: gauge
+        type: object
+        path: '{$}'
+        labels:
+          deviceType: VR
+        values:
+          count: '{.usersInVR}'
+# END User Count By Device Type
+
+# User Count By Status
+      - name: resonite_onlineStats_users_status
+        help: Current user counts calculated using their Status
+        valuetype: gauge
+        type: object
+        path: '{$}'
+        labels:
+          status: Present
+        values:
+          count: '{.presentUsers}'
+      - name: resonite_onlineStats_users_status
+        help: Current user counts calculated using their Status
+        valuetype: gauge
+        type: object
+        path: '{$}'
+        labels:
+          status: Away
+        values:
+          count: '{.awayUsers}'
+# END User Count By Status
+
+
+# Users By Session Access Level
+      - name: resonite_onlineStats_users_accessLevel
+        help: Current user counts by the access level of the session they are in.
+        valuetype: gauge
+        type: object
+        path: '{.usersBySessionAccessLevel}'
+        labels:
+          accessLevel: Anyone
+        values:
+          count: '{.Anyone}'
+      - name: resonite_onlineStats_users_accessLevel
+        help: Current user counts by the access level of the session they are in.
+        valuetype: gauge
+        type: object
+        path: '{.usersBySessionAccessLevel}'
+        labels:
+          accessLevel: Contacts
+        values:
+          count: '{.Contacts}'
+      - name: resonite_onlineStats_users_accessLevel
+        help: Current user counts by the access level of the session they are in.
+        valuetype: gauge
+        type: object
+        path: '{.usersBySessionAccessLevel}'
+        labels:
+          accessLevel: ContactsPlus
+        values:
+          count: '{.ContactsPlus}'
+      - name: resonite_onlineStats_users_accessLevel
+        help: Current user counts by the access level of the session they are in.
+        valuetype: gauge
+        type: object
+        path: '{.usersBySessionAccessLevel}'
+        labels:
+          accessLevel: RegisteredUsers
+        values:
+          count: '{.RegisteredUsers}'
+      - name: resonite_onlineStats_users_accessLevel
+        help: Current user counts by the access level of the session they are in.
+        valuetype: gauge
+        type: object
+        path: '{.usersBySessionAccessLevel}'
+        labels:
+          accessLevel: Private
+        values:
+          count: '{.Private}'
+      - name: resonite_onlineStats_users_accessLevel
+        help: Current user counts by the access level of the session they are in.
+        valuetype: gauge
+        type: object
+        path: '{.usersBySessionAccessLevel}'
+        labels:
+          accessLevel: LAN
+        values:
+          count: '{.LAN}'
+# END Users By Access Level
