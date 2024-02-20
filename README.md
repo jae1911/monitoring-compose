@@ -17,10 +17,12 @@ Compose files for a monitoring system.
 
 ## HowTo
 
-1. Create the environment file `.env` containing:
+1. Create the environment file `.env` containing (of course replace the UID and GID with your own):
 
 ````
 GF_SECURITY_ADMIN_PASSWORD=iamsecret
+MY_UID=777
+MY_GID=777
 ````
 
 2. `docker compose up -d uptime-kuma` and set it up
